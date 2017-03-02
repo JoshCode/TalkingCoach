@@ -5,27 +5,30 @@ using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 using System.Collections.Generic;
 using System.IO;
-
-[System.Serializable]
-public class Item {
-	public string name;
-	public AudioClip audioClip;
-
-	public Item(string name, AudioClip aClip){
-		this.name = name;
-		this.audioClip = aClip;
-	}
-}
+//
+//[System.Serializable]
+//public class Item {
+//	public string name;
+//	public AudioClip audioClip;
+//
+//	public Item(string name, AudioClip aClip){
+//		this.name = name;
+//		this.audioClip = aClip;
+//	}
+//}
 
 public class CreateScrollList : MonoBehaviour {
 
 	private Animation animation;
 
 	[SerializeField]
-	private string idle = "female_idle_01_biped_animclip";
+	private string idle = "male_idle_01_biped_animclip";
 	
 	[SerializeField]
 	public string talk = "avatar_talk";
+
+	public GameObject maleAvatar;
+	public GameObject femaleAvatar;
 
 	// Use this for initialization
 	public GameObject audioButton;
@@ -52,7 +55,8 @@ public class CreateScrollList : MonoBehaviour {
 
 		//Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
 		//itemList = new List<Item>();
-		this.animation = this.GetComponent<Animation> () as Animation;
+		//this.animation = this.GetComponent<Animation> () as Animation;
+		this.animation = femaleAvatar.GetComponent<Animation> () as Animation;
 		this.animation [idle].layer = 1;
 		this.animation [talk].layer = 2;
 		this.animation.CrossFadeQueued(idle);
@@ -147,6 +151,7 @@ public class CreateScrollList : MonoBehaviour {
 		this.audio.Play();
 		this.animation.wrapMode = WrapMode.Loop;
 		this.animation.CrossFade (talk, 0.0f, PlayMode.StopAll);
+		this.animation.Blend(idle);
 		this.StartCoroutine(waitForAudioToFinish(clipLength));
 		button.nameLabel.text = "Replay";
 	}

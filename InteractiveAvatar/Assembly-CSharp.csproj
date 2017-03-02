@@ -46,10 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AnimationsManager.cs" />
+     <Compile Include="Assets\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\Scripts\AudioButton.cs" />
-     <Compile Include="Assets\Scripts\ButtonClick.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Enums.cs" />
      <Compile Include="Assets\Scripts\CreateScrollList.cs" />
-     <Compile Include="Assets\Scripts\ToggleLight.cs" />
+     <Compile Include="Assets\Scripts\SpeakTTS.cs" />
      <Compile Include="Assets\exampleViewerFiles\AvatarController.cs" />
      <Compile Include="Assets\exampleViewerFiles\CameraControls.cs" />
      <Compile Include="Assets\exampleViewerFiles\CameraWireframe.cs" />
