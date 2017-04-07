@@ -10,6 +10,9 @@ public class AnimationsManager : MonoBehaviour {
 	[SerializeField]
 	private string talk;
 
+	[SerializeField]
+	private string talkmix;
+
 	private static AnimationsManager _instance;
 
 	//Singleton Initiation
@@ -33,5 +36,9 @@ public class AnimationsManager : MonoBehaviour {
 
 	public string getTalk(){
 		return talk;
+	}
+
+	public string getTalkmix(){
+		return talkmix;
 	}
 }

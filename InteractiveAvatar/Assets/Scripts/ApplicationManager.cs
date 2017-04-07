@@ -18,16 +18,22 @@ public class ApplicationManager : MonoBehaviour {
 
 	public List<GameObject> coach_prefabs;
 	public GameObject coach_holder;
+	public GameObject backround_holder;
 
 	private GameObject new_coach;
 
 	private Animation animation;
+
+	Sprite[] backgroundTexture;
+	SpriteRenderer backgroundSprit;
 
 	//[SerializeField]
 	private string idle;
 
 	//[SerializeField]
 	private string talk;
+
+	private string talkmix;
 
 	public List<Item> itemList;
 	public Transform contentPanel;
@@ -39,13 +45,28 @@ public class ApplicationManager : MonoBehaviour {
 	private AudioButton start;
 	private AudioButton stop;
 
-	//private AudioButton changeModel;
+	private static ApplicationManager _instance;
+
+	//Singleton Initiation
+	public static ApplicationManager instance
+	{
+		get
+		{
+			if (_instance == null)
+			{
+				_instance = GameObject.FindObjectOfType<ApplicationManager>();
+				DontDestroyOnLoad(_instance.gameObject);
+			}
+			return _instance;
+		}
+	}
 
 	private Camera[] cams;
 	public float timeOut = 30.0f; // Time Out Setting in Seconds
 	private float timeOutTimer = 0.0f;
 
 	int coach_number = 0;
+	int backround_number;
 	private CoachType coach_type;
 
 	void Start () {
@@ -65,8 +86,14 @@ public class ApplicationManager : MonoBehaviour {
 	}
 
 	private void on_load(){
+		backgroundSprit =  backround_holder.GetComponent<SpriteRenderer>();
+		this.load_background();
 		this.load_coach();
 		this.populateList();
+	}
+
+	private void load_background(){
+		backgroundTexture = Resources.LoadAll<Sprite>("Textures");
 	}
 
 	//load all the coach/avatar
@@ -101,11 +128,23 @@ public class ApplicationManager : MonoBehaviour {
 		//coach_number = 0;
 		new_coach = GameObject.Instantiate(coach_prefabs[coach_number]);
 		new_coach.transform.parent = coach_holder.transform;
-		new_coach.transform.localPosition = new Vector3(0, 0, 0);
-		new_coach.transform.localRotation = Quaternion.identity;
-		new_coach.transform.localScale = new Vector3(1, 1, 1);
+
+		if(coach_number == 6){
+			new_coach.transform.localPosition = new Vector3(0, 13, 3);
+			new_coach.transform.localRotation = Quaternion.identity;
+			new_coach.transform.localScale = new Vector3(1, 1, 1);
+		}else{
+			new_coach.transform.localPosition = new Vector3(0, 0, 0);
+			new_coach.transform.localRotation = Quaternion.identity;
+			new_coach.transform.localScale = new Vector3(1, 1, 1);
+		}
 
 		this.loadAnimations(new_coach);
+	}
+
+	public void changeBackground(){
+		this.backround_number = (this.backround_number + 1) % backgroundTexture.Length;
+		backgroundSprit.sprite = backgroundTexture[this.backround_number];
 	}
 
 	public void changeCoach(){
@@ -119,9 +158,11 @@ public class ApplicationManager : MonoBehaviour {
 	public void loadAnimations(GameObject coach){
 		idle = coach.GetComponent<AnimationsManager>().getIdle();
 		talk = coach.GetComponent<AnimationsManager>().getTalk();
+		talkmix = coach.GetComponent<AnimationsManager>().getTalkmix();
 		this.animation = this.new_coach.GetComponent<Animation> () as Animation;
 		this.animation [idle].layer = 1;
 		this.animation [talk].layer = 2;
+		this.animation [talkmix].layer = 3;
 	}
 
 	void populateList(){
@@ -157,6 +198,13 @@ public class ApplicationManager : MonoBehaviour {
 		changeButton.button.onClick.RemoveAllListeners();
 		changeButton.button.onClick.AddListener(() => this.changeCoach());
 		changeCoach.transform.SetParent (contentPanel);
+
+		GameObject background = Instantiate (audioButton) as GameObject;
+		AudioButton changeBackground = background.GetComponent <AudioButton> ();
+		changeBackground.nameLabel.text = "Change Background";
+		changeBackground.button.onClick.RemoveAllListeners();
+		changeBackground.button.onClick.AddListener(() => this.changeBackground());
+		changeBackground.transform.SetParent (contentPanel);
 	}
 		
 	public void playClip(AudioButton button){
@@ -167,6 +215,7 @@ public class ApplicationManager : MonoBehaviour {
 		this.new_coach.GetComponent<Animation>().wrapMode = WrapMode.Loop;
 		this.new_coach.GetComponent<Animation>().CrossFade (talk, 0.0f, PlayMode.StopAll);
 		this.new_coach.GetComponent<Animation>().Blend(idle);
+		this.new_coach.GetComponent<Animation>().Blend(talkmix);
 		this.StartCoroutine(waitForAudioToFinish(clipLength));
 		button.nameLabel.text = "Replay";
 	}
@@ -179,6 +228,17 @@ public class ApplicationManager : MonoBehaviour {
 		this.new_coach.GetComponent<Animation>().CrossFade (idle, 0.0f, PlayMode.StopAll);
 		this.StartCoroutine(waitForAudioToFinish(clipLength));
 		this.start.nameLabel.text = "Start";
+	}
+
+	public void PlayAnimation(){
+		this.new_coach.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+		this.new_coach.GetComponent<Animation>().CrossFade (talk, 0.0f, PlayMode.StopAll);
+		this.new_coach.GetComponent<Animation>().Blend(idle);
+	}
+
+	public void StopAnimation(){
+		this.new_coach.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+		this.new_coach.GetComponent<Animation>().CrossFade (idle, 0.0f, PlayMode.StopAll);
 	}
 
 

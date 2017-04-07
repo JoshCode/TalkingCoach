@@ -2,15 +2,17 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ApplicationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Controllers/Enums.cs" Line="7" Column="14" />
-      <File FileName="Assets/Scripts/ApplicationManager.cs" Line="41" Column="28" />
+      <File FileName="Assets/Scripts/ApplicationManager.cs" Line="221" Column="3" />
+      <File FileName="Assets/Scripts/Controllers/Enums.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/CreateScrollList.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/SpeakTTS.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AnimationsManager.cs" Line="42" Column="18" />
+      <File FileName="Assets/avatars/Remy/AvatarController.cs" Line="22" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <RunToCursorBreakpoint file="/Users/fawadkhan/Develop/svn/WorldBuilderVR/Assets/_Scripts/Managers/ApplicationManager.cs" line="26" column="22" />
+      <Breakpoint file="/Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Assets/Scripts/SpeakTTS.cs" line="41" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

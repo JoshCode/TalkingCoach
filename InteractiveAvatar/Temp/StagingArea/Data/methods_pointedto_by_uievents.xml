@@ -1,0 +1,7 @@
+<linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="SpeakTTS">
+			<method name="SpeakTTS_Click"/>
+		</type>
+	</assembly>
+</linker>

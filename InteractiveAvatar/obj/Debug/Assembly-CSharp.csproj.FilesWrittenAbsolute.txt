@@ -44,3 +44,6 @@
 /Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/Mono.Cecil.Mdb.dll
 /Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/UnityEngine.Advertisements.dll
 /Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/UnityEngine.Purchasing.dll
+/Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/Assembly-UnityScript-firstpass.dll
+/Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/fawadkhan/Develop/Interactive Avatar/interactiveavatar/InteractiveAvatar/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
