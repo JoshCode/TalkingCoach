@@ -23,6 +23,8 @@ if (typeof textToSpeach != 'undefined') {
     	var self = this;
 
 
+
+
         /*self.init = function() {
 
             if (typeof speechSynthesis === 'undefined') {
@@ -81,7 +83,15 @@ if (typeof textToSpeach != 'undefined') {
         }*/
 
 
-
+        self.getSystemVoices = function(){
+            var voices = window.speechSynthesis.getVoices();
+            // var voicesnames;
+            // for (var i = 0; i < voices.length; i++) {
+            //     voicesnames[i] = voices[i].name;
+            // }
+            console.log("voices" + voices);
+            return voices;
+        }
 
     	self.speak = function (text, voicename, parameters){
 
@@ -122,8 +132,15 @@ if (typeof textToSpeach != 'undefined') {
                         };
                     }
 
-			speechSynthesis.speak(msg);
+			window.speechSynthesis.speak(msg);
     	}
+
+         self.cancel = function() {
+            //self.checkAndCancelTimeout();
+            //self.cancelled = true;
+            console.log("Speach Cancelled");
+            window.speechSynthesis.cancel();
+        }
 
 
         

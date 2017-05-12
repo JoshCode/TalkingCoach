@@ -20,6 +20,8 @@ public class ApplicationManager : MonoBehaviour {
 	public GameObject coach_holder;
 	public GameObject backround_holder;
 
+	public Camera avatarCamera;
+
 	private GameObject new_coach;
 
 	private Animation animation;
@@ -82,6 +84,9 @@ public class ApplicationManager : MonoBehaviour {
 	//Awake function
 	void Awake()
 	{
+		#if !UNITY_EDITOR && UNITY_WEBGL
+		WebGLInput.captureAllKeyboardInput = false;
+		#endif
 		this.on_load();
 	}
 
@@ -96,6 +101,15 @@ public class ApplicationManager : MonoBehaviour {
 		backgroundTexture = Resources.LoadAll<Sprite>("Textures");
 	}
 
+	public void zoomAvatarCamera(int zoomValue){
+		Vector3 changeZoom = new Vector3(0,0,zoomValue);
+		avatarCamera.transform.transform.position += changeZoom;	
+	}
+
+	public void moveCoah(int moveHorizontal, int moveVertical){
+		Vector3 changePosition = new Vector3(moveHorizontal, moveVertical, 0);
+		new_coach.transform.position += changePosition;
+	}
 	//load all the coach/avatar
 	private void load_coach()
 	{
@@ -129,15 +143,9 @@ public class ApplicationManager : MonoBehaviour {
 		new_coach = GameObject.Instantiate(coach_prefabs[coach_number]);
 		new_coach.transform.parent = coach_holder.transform;
 
-		if(coach_number == 6){
-			new_coach.transform.localPosition = new Vector3(0, 13, 3);
-			new_coach.transform.localRotation = Quaternion.identity;
-			new_coach.transform.localScale = new Vector3(1, 1, 1);
-		}else{
-			new_coach.transform.localPosition = new Vector3(0, 0, 0);
-			new_coach.transform.localRotation = Quaternion.identity;
-			new_coach.transform.localScale = new Vector3(1, 1, 1);
-		}
+		new_coach.transform.localPosition = new Vector3(0, 0, 0);
+		new_coach.transform.localRotation = Quaternion.identity;
+		new_coach.transform.localScale = new Vector3(1, 1, 1);
 
 		this.loadAnimations(new_coach);
 	}
@@ -148,10 +156,12 @@ public class ApplicationManager : MonoBehaviour {
 	}
 
 	public void changeCoach(){
+		Vector3 oldCoachPosition = new_coach.transform.position;
 		this.coach_number = (coach_number + 1) % coach_prefabs.Count;
 		Destroy(this.new_coach);
 		this.stopClip(this.stop);
 		this.load_coach();
+		new_coach.transform.position = oldCoachPosition;
 	}
 
 
